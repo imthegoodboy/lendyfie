@@ -1,0 +1,5 @@
+export const REQUEST_STATUS = ["Pending", "Active", "Cancelled", "Ended", "Defaulted"];
+
+// export const LENDING_CONTRACT_ADDRESS = '0x793958C80F356c85C235165EcE4c53971fdEbe94';
+// export const LENDING_CONTRACT_ADDRESS = '0x623380f6BE9196B81809C6d1af3CcA1187020077';
+export const LENDING_CONTRACT_ADDRESS = '0x48CddE6c5af7D19BF1A436159b54AD42d753141C'; //matic mainnet

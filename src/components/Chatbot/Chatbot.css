@@ -1,0 +1,126 @@
+.chatbot-wrapper {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}
+
+.chatbot-toggle {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.5);
+}
+
+.chatbot-window {
+  width: 360px;
+  background: #fff;
+  color: #000;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.chatbot-wrapper.open .chatbot-window {
+  display: block;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chatbot-header {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: #fff;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.chatbot-body {
+  max-height: 350px;
+  overflow: auto;
+  padding: 12px;
+  background: #f8f9fa;
+}
+
+.chat-message {
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  line-height: 1.5;
+}
+
+.chat-message.bot {
+  background: #fff;
+  color: #333;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.chat-message.user {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: #fff;
+  text-align: right;
+  margin-left: auto;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.chatbot-footer {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.chatbot-footer input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ff6b35;
+  border-radius: 8px;
+  margin-right: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.chatbot-footer input:focus {
+  border-color: #ff8c42;
+}
+
+.chatbot-footer button {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chatbot-footer button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
