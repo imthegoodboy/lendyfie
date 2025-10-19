@@ -1,17 +1,15 @@
 ## CFY.FINANCE
-https://www.youtube.com/watch?v=xPK_FzsnIBI
+ 
 
  
 NFT-Collateralised Loans on Polygon
-
-![alt text](https://raw.githubusercontent.com/Aranyani01/CFY/main/public/logo512.png)
+ 
 
 Beta is now Live on Matic Mainnet! Contract Addresses:
 
 - LeaseNFT.sol : 0xbe7Ba64cCAab7a4aaB4D32e4070Bf85D057D2B5c
 - LoanNFT.sol : 0x48CddE6c5af7D19BF1A436159b54AD42d753141C
-
-## Webapp (Frontend) live on: http://cfy.finance:3000
+ 
 
 *Summary:*
 
@@ -149,9 +147,9 @@ Prerequisites:
 cd C:\Users\parth\Downloads\leandyfie\leandyfie
 git init
 git add .
-git commit -m "Add lendyfie frontend"
+git commit -m "Add leadifie frontend"
 # replace the URL below with your GitHub repo URL
-git remote add origin https://github.com/<your-username>/lendyfie.git
+git remote add origin https://github.com/<your-username>/leadifie.git
 git push -u origin main
 ```
 
@@ -226,7 +224,7 @@ npm run build
 npm install --save serve
 
 # git push example
-git init; git add .; git commit -m "Add lendyfie frontend"; git remote add origin https://github.com/<you>/lendyfie.git; git push -u origin main
+git init; git add .; git commit -m "Add leadifie frontend"; git remote add origin https://github.com/<you>/leadifie.git; git push -u origin main
 ```
 
 ## Troubleshooting checklist
