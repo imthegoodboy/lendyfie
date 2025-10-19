@@ -56,67 +56,188 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+# Lendyfie — NFT Leasing & Loans Web App
 
-### `npm start`
+This repository contains the front-end for Lendyfie (previously CFY.Finance), a React-based web app that lets users create and manage NFT-backed lease offers and loan requests. The UI interacts with Ethereum-compatible smart contracts (solidity files in `contracts/`, `c2/`, and `c3/`) and uses Web3 to read and send transactions from the browser.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This README explains what the project is, how the website works, how to run it locally, and step-by-step instructions to deploy the app on Render (static site). All commands below are written for Windows PowerShell.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## What this app does (high level)
+- Browse NFT assets and view details
+- Create lease offers and loan requests backed by ERC-721 tokens
+- Fund and manage loans and leases from the UI
+- Connect a browser wallet such as MetaMask, or use Magic SDK in some flows
+- Uses Redux for app state, materialize / Material-UI for UI elements, and web3 for blockchain interactions
 
-### `npm test`
+## Project structure (key files)
+- `src/` — React source code
+	- `index.js` — App entry point
+	- `App.js` — Router and top-level app component
+	- `components/` — UI components grouped by feature (leasing, loans, layout)
+	- `store/` — Redux actions and reducers
+	- `services/web3/` — helpers to connect to contracts and web3 provider
+	- `contractsInterfaces/` — contract ABIs used by the frontend
+- `public/` — static assets
+- `contracts/`, `c2/`, `c3/` — Solidity contracts (for reference or local contract dev)
+- `package.json` — npm scripts and dependencies
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+From `package.json` (important scripts):
+- `npm start` — start development server (react-scripts start)
+- `npm run build` — make production build (react-scripts build)
+- `npm test` — run tests (react-scripts test)
 
-### `npm run build`
+## How the website works (technical flow)
+1. When a user opens the site, the React app boots and Redux initializes application state.
+2. The UI loads contract ABIs from `src/contractsInterfaces/` and uses web3 to create contract instances.
+3. To create or fund a lease/loan, the user connects a wallet (MetaMask) or uses Magic. The app requests the wallet to sign transactions.
+4. Transactions (create loan, fund loan, repay, claim collateral) are sent to the network via the provider. The app listens for transaction confirmations and updates the UI state accordingly.
+5. For production the app is a static bundle (JS/CSS/HTML) served by any static host. All blockchain interactions happen in the browser, so no server-side code is required.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Local development (PowerShell)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Prerequisites:
+- Node.js & npm installed (Node 10+ recommended for react-scripts v3.x; Node 12+ preferred)
+- Optional: MetaMask browser extension or another web3 wallet
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Steps:
 
-### `npm run eject`
+1. Clone or open the project folder in PowerShell:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```powershell
+cd C:\Users\parth\Downloads\leandyfie\leandyfie
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Install dependencies:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```powershell
+npm install
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. Run the development server:
 
-## Learn More
+```powershell
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This opens http://localhost:3000 by default. The dev server supports hot-reload.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Notes on wallets and web3:
+- In development, open your browser with MetaMask installed and connected to the network you want to test (e.g., Polygon/Matic, Ethereum testnet).
+- If the app uses RPC endpoints (Infura/Alchemy), set them via environment variables prefixed with `REACT_APP_`.
 
-### Code Splitting
+## Production build
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+To build a production-ready static bundle:
 
-### Analyzing the Bundle Size
+```powershell
+npm run build
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The output is written to the `build/` directory. You can serve this folder with any static host.
 
-### Making a Progressive Web App
+## Deploying to Render — step by step (Static Site)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Below is a detailed guide to host this app on Render as a static site (recommended for Create React App apps).
 
-### Advanced Configuration
+Prerequisites:
+- A Render account (https://render.com)
+- Your project pushed to a Git provider (GitHub/GitLab/Bitbucket)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+1) Push your code to a Git provider (example: GitHub)
 
-### Deployment
+```powershell
+cd C:\Users\parth\Downloads\leandyfie\leandyfie
+git init
+git add .
+git commit -m "Add lendyfie frontend"
+# replace the URL below with your GitHub repo URL
+git remote add origin https://github.com/<your-username>/lendyfie.git
+git push -u origin main
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+2) Create a new Static Site on Render
+- In Render dashboard click New -> Static Site
+- Connect Render to your Git provider and select your repo and branch (e.g., `main`)
 
-### `npm run build` fails to minify
+3) Render settings (important fields)
+- Build Command: npm run build
+- Publish Directory: build
+- Root Directory: leave empty unless your app is in a subfolder
+- Environment: set any `REACT_APP_` variables needed (contract addresses, RPC URLs)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+4) Start the deployment
+- Click Create Static Site. Render will run `npm ci`/`npm install` and then `npm run build`.
+- The site will be available at `https://<yoursite>.onrender.com` after successful deploy.
+
+5) Common Render build issues & fixes
+- If Render fails because of Node version, pin Node via `package.json`:
+
+```json
+"engines": {
+	"node": "12.x"
+}
+```
+
+- If your build needs packages that are currently listed in `devDependencies` and Render isn’t installing them, move required build-time packages to `dependencies`.
+- If the build requires native tooling (e.g., specific compilers), you can build locally and deploy the `build/` directory directly using a manual static site deployment on Render or by using a zip upload.
+
+## Alternative: Render Web Service (if you want a running Node process)
+
+If you prefer to host the app as a Web Service (Render runs a server process), use these settings:
+- Build Command: npm run build
+- Start Command: npx serve -s build
+
+Note: Add `serve` to `dependencies` so Render can install it during build:
+
+```powershell
+npm install --save serve
+```
+
+Then set the Start Command in Render to:
+
+```
+npx serve -s build
+```
+
+This makes Render run a small static file server and keep the service alive.
+
+## Environment variables
+
+If your app needs RPC endpoints or contract addresses, add them in Render's Environment section. Use the `REACT_APP_` prefix so Create React App exposes them to the client:
+
+- REACT_APP_INFURA_URL=https://mainnet.infura.io/v3/<key>
+- REACT_APP_CONTRACT_ADDRESS=0x1234...
+
+After changing environment variables in Render, redeploy the site.
+
+## Quick Commands (PowerShell) summary
+
+```powershell
+# install deps
+npm install
+
+# start dev site
+npm start
+
+# build production
+npm run build
+
+# add serve if using Render Web Service
+npm install --save serve
+
+# git push example
+git init; git add .; git commit -m "Add lendyfie frontend"; git remote add origin https://github.com/<you>/lendyfie.git; git push -u origin main
+```
+
+## Troubleshooting checklist
+- Check browser console for runtime errors (missing env vars, contract addresses)
+- Check Render build logs (Render dashboard -> Events & Activity -> View Build Logs)
+- Ensure any build-time packages are in `dependencies` (Render installs `dependencies` for static sites)
+- If you see ABI mismatches, update JSON files in `src/contractsInterfaces/` to match deployed contracts
+
+## Optional next steps I can do for you
+- Add `engines` to `package.json` to pin Node version used on Render
+- Add a `render.yaml` for reproducible Render settings
+- Move any required build-time dependencies to `dependencies` if you want me to check the build logs
+
+If you want me to make one of those changes now, tell me which and I'll update the repo and run a quick build check.
